@@ -19,12 +19,15 @@ docRoute.post('/',async(req,res)=>{
 docRoute.get('/',async(req,res)=>{
   
     try {
-        const { specialization, sortBy } = req.query;
-        console.log(specialization,sortBy)
+        const { specialization, sortBy, search } = req.query;
+        console.log(specialization,sortBy,search)
         let query = DocModel.find();
         let sort = 1; 
         if (specialization) {
             query = query.where('specialization', specialization);
+        }
+        if(search){
+            query = query.where('name', new RegExp(search, 'i'));
         }
 
         sortBy==="asc"?sort=1:sort=-1
