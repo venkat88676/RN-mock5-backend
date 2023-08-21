@@ -17,16 +17,18 @@ docRoute.post('/',async(req,res)=>{
 })
 
 docRoute.get('/',async(req,res)=>{
+  
     try {
-        const { destination, sortBy } = req.query;
+        const { specialization, sortBy } = req.query;
+        console.log(specialization,sortBy)
         let query = DocModel.find();
         let sort = 1; 
-        if (destination) {
-            query = query.where('destination', destination);
+        if (specialization) {
+            query = query.where('specialization', specialization);
         }
 
         sortBy==="asc"?sort=1:sort=-1
-        query = query.sort({ budget: sort });
+        query = query.sort({ date: sort });
 
         const bookings = await query.exec();
         res.status(200).send(bookings);
